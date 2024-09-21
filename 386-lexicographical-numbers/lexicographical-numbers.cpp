@@ -1,33 +1,24 @@
 class Solution {
 public:
+//  by recursion
     vector<int> lexicalOrder(int n) {
         
-        vector<string>ans;
-
-        for(int i=1;i<=n;i++){
-            string s=to_string(i);
-            ans.push_back(s);
+        vector<int>ans;
+        for(int i=1;i<=9;i++){
+            solve(i,n,ans);
         }
 
-        sort(ans.begin(),ans.end(),cmp);
-        vector<int>res;
-
-        for(auto it:ans){
-            res.push_back(stoi(it));
-        }
-        return res;
+        return ans;
     }
 
-    static bool cmp(string a, string b){
-        int i=0;
-        int k=min(a.size(),b.size());
-        while(i<k){
-            if(a[i]==b[i]){
-                i++;
-                continue;
-            }
-            return a<b;
+    void solve(int i, int n, vector<int>&ans){
+
+        if(i>n) return ;
+        ans.push_back(i);
+
+        for(int j=0;j<=9;j++){
+            int k=i*10+j;
+            solve(k,n,ans);
         }
-        return a<b;
     }
 };
