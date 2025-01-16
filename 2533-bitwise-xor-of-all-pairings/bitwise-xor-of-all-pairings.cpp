@@ -3,7 +3,6 @@ public:
     int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
         
         int ans=0;
-        int p=1;
         for(int i=0;i<32;i++){
             int o1=0 , l1=0 , o2=0 , l2=0;
             for(int j=0;j<nums1.size();j++){
@@ -17,7 +16,7 @@ public:
             int x1=o1*l2;
             int x2=o2*l1;
 
-            if((x1+x2)%2!=0) ans+=pow(2,i);
+            if((x1+x2)%2!=0) ans+=(1<<i);
         }
 
         return ans;
