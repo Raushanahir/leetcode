@@ -1,43 +1,75 @@
+class Disjoint_Set {
+public:
+    vector<int> par, size;
+    Disjoint_Set(int n) {
+        par.resize(n + 1);
+        size.resize(n + 1);
+        for(int i = 0; i < n; i++) {
+            par[i] = i;
+            size[i] = 1 ;
+        }
+    }
+    int findUPar(int node) {
+        if(node == par[node]) return node;
+        return par[node] = findUPar(par[node]);
+    }
+    void unionBySize(int x, int y) {
+        int ulp_x = findUPar(x);
+        int ulp_y = findUPar(y);
+
+        if(ulp_x == ulp_y) return;
+
+        if(size[ulp_x] > size[ulp_y]) {
+            par[ulp_y] = ulp_x;
+            size[ulp_x]+=size[ulp_y];
+        }
+        else {
+            par[ulp_x] = ulp_y;
+            size[ulp_y] += size[ulp_x];
+        }
+    }
+};
+
+
 class Solution {
 public:
     int n,m;
-// dfs method for solving this problem
     int maxAreaOfIsland(vector<vector<int>>& grid) {
         
         n=grid.size();
         m=grid[0].size();
-        vector<vector<int>>vis(n,vector<int>(m,0));
+        // vector<vector<int>>vis(n,vector<int>(m,0));
 
-        int ans=0;
+        Disjoint_Set ds(n*m);
+
+        int delr[]={1,-1,0,0};
+        int delc[]={0,0,-1,1};
+
+
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(vis[i][j]==0 and grid[i][j]==1){
-                    int k=dfs(i,j,grid,vis,1);
-                    ans=max(k,ans);
-                    cout << ans << " ";
+                if(grid[i][j]==0)continue;
+
+                for(int k=0;k<4;k++){
+                    int r=i+delr[k];
+                    int c=j+delc[k];
+
+                    if(r<n and r>=0 and c<m and c>=0 and grid[r][c]==1 ){
+                        ds.unionBySize(i*m+j , r*m+c);
+                    }
                 }
             }
         }
 
-        return ans;
-    }
-
-    int dfs(int r,int c,vector<vector<int>>&grid,vector<vector<int>>&vis,int area){
-
-        
-        int drow[]={1,0,0,-1};
-        int dcol[]={0,1,-1,0};
-        int k=0;
-        vis[r][c]=1;
-        for(int i=0;i<4;i++){
-            int row=drow[i]+r;
-            int col=dcol[i]+c;
-            if(row<n && col<m && row>=0 && col>=0 && vis[row][col]==0 && grid[row][col]==1){
-                area+=1;
-               k=dfs(row,col,grid,vis,area);
-               area=max(area,k);  // updating the value of area after traversing the grid;
+        int ans=0;
+        for(int i=0;i<n ; i++){
+            for(int j = 0; j< m;j++){
+            if(grid[i][j])
+            ans=max(ans,ds.size[ds.findUPar(i*m + j)]);
             }
+            cout << ds.size[i]<<" ";
         }
-        return max(area,k);
+
+        return ans;
     }
 };
