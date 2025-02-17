@@ -4,33 +4,28 @@ public:
     int numTilePossibilities(string tiles) {
 
         n = tiles.size();
-        sort(begin(tiles),end(tiles));
-        unordered_set<string> st;
+        unordered_set<string> ans;
+        vector<bool>vis(n,false);
 
-        No_of_substring(tiles, st, "", 0);
-        int ans=0;
-        for (auto it : st) {
-            sort(it.begin(), it.end());
-            do {
-                ans++;
-            } while (next_permutation(begin(it), end(it)));
-        }
+        solve(tiles, ans, "",vis);
 
         // -1 for space " " substring
-        return ans - 1;
+        return ans.size() - 1;
     }
 
-    void No_of_substring(string s, unordered_set<string>& st, string temp,
-                         int ind) {
-
-        if (ind == n) {
-            st.insert(temp);
-            return;
+// substring and it permutation 
+    void solve(string s, unordered_set<string>& st, string temp,vector<bool>&vis) {
+        
+        st.insert(temp);
+        for(int i=0;i<n;i++){
+            if(vis[i]){
+                continue;
+            }
+            vis[i]=true;
+            temp.push_back(s[i]);
+            solve(s,st,temp,vis);
+            temp.pop_back();
+            vis[i]=false;
         }
-
-        temp.push_back(s[ind]);
-        No_of_substring(s, st, temp, ind + 1);
-        temp.pop_back();
-        No_of_substring(s, st, temp, ind + 1);
     }
 };
