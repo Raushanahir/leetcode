@@ -4,21 +4,20 @@ public:
     int numTilePossibilities(string tiles) {
 
         n = tiles.size();
-
+        sort(begin(tiles),end(tiles));
         unordered_set<string> st;
 
         No_of_substring(tiles, st, "", 0);
-
-        unordered_set<string> ans;
-
+        int ans=0;
         for (auto it : st) {
             sort(it.begin(), it.end());
             do {
-                ans.insert(it);
+                ans++;
             } while (next_permutation(begin(it), end(it)));
         }
 
-        return ans.size() - 1;
+        // -1 for space " " substring
+        return ans - 1;
     }
 
     void No_of_substring(string s, unordered_set<string>& st, string temp,
