@@ -11,32 +11,28 @@
  */
 class Solution {
 public:
+    int cnt=0;
     int pathSum(TreeNode* root, int targetSum) {
         
-        queue<TreeNode*>q;
         if(root==NULL) return 0;
-
-        int cnt=0;
-        q.push(root);
-
-        while(!q.empty()){
-            TreeNode* node=q.front();
-            q.pop();
-            long long sum=0;
-            solve(node,targetSum,sum,cnt); 
-            if(node->left!=NULL) q.push(node->left);
-            if(node->right!=NULL) q.push(node->right);
-        }
+        unordered_map<long long,int>mp;
+        mp[0]=1;
+        solve(root,targetSum,0,mp);
+        
         return cnt;
     }
 
-    void solve(TreeNode* node, int target,long long sum,int &cnt){
+    void solve(TreeNode* node, int target,long long sum,unordered_map<long long,int>&mp){
 
         if(node==NULL) return ;
         sum+=node->val;
-        if(sum==target) cnt++;
-        solve(node->left,target,sum,cnt);
-        solve(node->right,target,sum,cnt);
+        if(mp.find(sum-target)!=mp.end()) cnt+=mp[sum-target];
+        mp[sum]++;
+        solve(node->left,target,sum,mp);
+        solve(node->right,target,sum,mp);
+        
+        mp[sum]--;
+        if(mp[sum]==0) mp.erase(sum);
 
         return ;
     }
