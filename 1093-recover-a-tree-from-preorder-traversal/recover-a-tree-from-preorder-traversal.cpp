@@ -11,20 +11,15 @@
  */
 class Solution {
 public:
-    TreeNode* recoverFromPreorder(string traversal) {
-        
+    TreeNode* recoverFromPreorder(string traversal) {  
         int n=traversal.size();
         if(n==0) return NULL;
         queue<pair<int,int>>q; //< value , level>
         unordered_map<int,TreeNode*>mp; // < TreeNode, level>
-        int i=0;
-        int level=0;
-        // putting all element in queue(value , level)
-        while(i<n){
+        int i=0 , level=0;
+        while(i<n){   // putting all element in queue(value , level)
             int k=i;
-            while(i<n and traversal[i]!='-'){
-                i++;
-            }
+            while(i<n and traversal[i]!='-') i++;
             int val=stoi(traversal.substr(k,i-k));
             q.push({val,level});
             level=0;
@@ -33,8 +28,6 @@ public:
                 i++;
             }
         }
-
-        // putting in map < level and TreeNode> 
         TreeNode* temp=new TreeNode(q.front().first);
         TreeNode* root=temp;
         mp[q.front().second]=temp;
@@ -52,9 +45,7 @@ public:
                 mp[level]=node;
                 node->left=NULL; node->right=NULL;
             }
-            
         }
-
         return root;
     }
 };
