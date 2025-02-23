@@ -11,12 +11,12 @@
  */
 class FindElements {
 public:
-
+    unordered_set<int>st;
     TreeNode* node;
     void built_tree(TreeNode* root,int ind){
 
         if(root==NULL) return ;
-
+        st.insert(ind);
         if(root->left!=NULL) {
             root->left->val=2*ind+1;
             built_tree(root->left,2*ind+1);
@@ -28,6 +28,7 @@ public:
     }
 
     FindElements(TreeNode* root) {
+        st.insert(0);
         node=root;
         node->val=0;
         built_tree(node,0);
@@ -35,21 +36,7 @@ public:
     
     bool find(int target) {
 
-        if(node==NULL) return false;
-        
-        queue<TreeNode*>q;
-        q.push(node);
-
-        while(!q.empty()){
-            TreeNode* ele=q.front();
-            q.pop();
-
-            if(ele->val==target) return true;
-            else if(ele->val>target) return false;
-
-            if(ele->left!=NULL) q.push(ele->left); 
-            if(ele->right!=NULL) q.push(ele->right); 
-        }
+        if(st.find(target)!=NULL) return true;
 
         return false;
     }
