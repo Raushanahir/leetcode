@@ -22,9 +22,9 @@ public:
                     k=a+b;
                 }
                 ans=max(ans,cnt);
-                if(ans>=(n-j)) break;
+                //if(ans>=(n-j)) break;
             }
-                if(ans>=(n-i)) break;
+               // if(ans>=(n-i)) break;
         }
         if(ans==2) return 0;
         return ans;
