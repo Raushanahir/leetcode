@@ -9,7 +9,8 @@ public:
             mp[it]=i;
             i++;
         }
-        int ans=2;
+
+        int ans=1;
 
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
