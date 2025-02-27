@@ -15,16 +15,14 @@ public:
                 int b=arr[j];
                 int k=a+b;
                 int cnt=2;
-                while(mp.find(k)!=mp.end()){
+                while(mp.count(k)>0){
                     cnt+=1;
                     a=b;
                     b=k;
                     k=a+b;
                 }
                 ans=max(ans,cnt);
-                //if(ans>=(n-j)) break;
             }
-               // if(ans>=(n-i)) break;
         }
         if(ans==2) return 0;
         return ans;
