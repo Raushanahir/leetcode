@@ -15,7 +15,8 @@ public:
                         int temp = prev;
                         prev = val;
                         val = temp + val;
-                    }
+                    } 
+                    else if(arr[k] > val) break;
                 }
             }
         }
