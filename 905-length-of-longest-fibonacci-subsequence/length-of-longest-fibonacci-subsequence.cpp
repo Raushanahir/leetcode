@@ -4,8 +4,10 @@ public:
 
         unordered_map<int,int>mp;
         int n=arr.size();
+        int i=0;
         for(auto it:arr){
-            mp[it]++;
+            mp[it]=i;
+            i++;
         }
         int ans=2;
 
