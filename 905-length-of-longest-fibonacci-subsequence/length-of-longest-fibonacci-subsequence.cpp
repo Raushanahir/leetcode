@@ -2,10 +2,10 @@ class Solution {
 public:
     int lenLongestFibSubseq(vector<int>& arr) {
 
-        unordered_set<int>st;
+        unordered_map<int,int>mp;
         int n=arr.size();
         for(auto it:arr){
-            st.insert(it);
+            mp[it]++;
         }
         int ans=2;
 
@@ -15,7 +15,7 @@ public:
                 int b=arr[j];
                 int k=a+b;
                 int cnt=2;
-                while(st.find(k)!=st.end()){
+                while(mp.find(k)!=mp.end()){
                     cnt+=1;
                     a=b;
                     b=k;
