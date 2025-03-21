@@ -18,9 +18,7 @@ public:
         unordered_map<string,vector<string>>ing;
         for(int i=0;i<n;i++){
             for(auto mat:ingredients[i]){
-                // if(rec.find(mat)!=rec.end()){
                     ing[recipes[i]].push_back(mat);
-                // }
             }
         }
 
@@ -31,14 +29,12 @@ public:
             if(vis.find(it)==vis.end()){
                 // dfs
                 dfs(st,it,ing,vis,rec);
-                // st.push(it);
             }
         }
 
         vector<string>topo;
         while(!st.empty()){
             topo.push_back(st.top());
-            // cout << st.top() << " ";
             st.pop();
         }
 
@@ -46,7 +42,6 @@ public:
         reverse(topo.begin(),topo.end());
 
         for(auto it:topo){
-            // cout << it << " ";
             int k=rec[it];
             bool flag=0;
             for(int j=0;j<ingredients[k].size();j++){
@@ -70,8 +65,6 @@ public:
     void dfs(stack<string>&st, string recipes,unordered_map<string,vector<string>>&ing , unordered_map<string,int>&vis , unordered_map<string,int>&rep){
 
         vis[recipes] = 1;
-        
-        // vis.insert(recipes);
 
         for(const auto& it : ing[recipes]){
             if(vis.find(it)==vis.end() && rep.find(it) != rep.end())
