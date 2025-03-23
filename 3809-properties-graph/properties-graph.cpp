@@ -12,24 +12,15 @@ public:
         int x_par = find(x, par);
         int y_par = find(y, par);
 
-        if (x_par < y_par) {
+        if (x_par != y_par) {
             par[y_par] = x_par;
-        } else {
-            par[x_par] = y_par;
         }
         return;
     }
 
     int numberOfComponents(vector<vector<int>>& properties, int k) {
 
-        unordered_map<int, unordered_set<int>> mp;
         int n = properties.size();
-
-        for (int i = 0; i < n; i++) {
-            for (auto it : properties[i]) {
-                mp[i].insert(it);
-            }
-        }
 
         vector<int> par(n);
         for (int i = 0; i < n; i++)
@@ -37,21 +28,11 @@ public:
 
         for (int i = 0; i < n; i++) {
             for (int j = 1 + i; j < n; j++) {
-                int same = 0;
-                unordered_set<int> st = mp[i];
-                for (auto it : mp[j]) {
-                    if (st.find(it) != st.end()) {
-                        same++;
-                    }
-                }
-                if (same >= k) {
-                    combine(i, j, par);
-                }
+                if(intersect(properties[i], properties[j], k))                  combine(i, j, par);
             }
         }
 
         int ans = 0;
-        // sort(par.begin(), par.end());
         for (int i = 0; i < n; i++) {
             if (par[i] == i) {
                 ans++;
@@ -59,5 +40,13 @@ public:
         }
 
         return ans;
+    }
+
+    bool intersect(vector<int> a, vector<int> b,int k) {
+        sort(a.begin(), a.end()); sort(b.begin(), b.end());
+        vector<int> v;
+        set_intersection(a.begin(), a.end(), b.begin(), b.end(), back_inserter(v));
+        unordered_set<int> st(v.begin(), v.end());
+        return st.size() >= k;
     }
 };
