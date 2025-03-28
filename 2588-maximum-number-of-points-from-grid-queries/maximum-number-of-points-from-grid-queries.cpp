@@ -46,12 +46,6 @@ public:
             ans[que[i].second]=cnt;
         }
 
-        for(int i=0;i<k;i++){
-            if(ans[i]==-1) ans[i]=0;
-        }
-
-
-
         return ans;
     }
 };
