@@ -15,7 +15,8 @@ public:
         for (int i = 0; i < n; i++) {
             st.insert(s[i]);
             mp[s[i]]--;
-            // checking all element in map that all element of set is zero(0) hai ki nahi;
+            // checking all element in map that all element of set is zero(0)
+            // hai ki nahi;
             int flag = 0;
             for (auto it : st) {
                 if (mp[it] > 0) {
