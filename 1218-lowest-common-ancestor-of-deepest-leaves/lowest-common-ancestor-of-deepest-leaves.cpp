@@ -16,8 +16,8 @@ public:
         TreeNode* leftChild = find_lca(root->left, p, q);
         TreeNode* rightChild = find_lca(root->right, p, q);
         if(leftChild == NULL) return rightChild;
-        if(rightChild == NULL) return leftChild;
-        return root;
+        else if(rightChild == NULL) return leftChild;
+        else return root;
     }
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
         queue<TreeNode*> q;
