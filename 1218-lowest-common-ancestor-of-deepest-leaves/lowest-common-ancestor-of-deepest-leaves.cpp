@@ -13,13 +13,9 @@ class Solution {
 public:
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
         
-        int level=checklevel(root);
-
-        cout << level << endl;
-
         if(root->left==NULL and root->right==NULL) return root;
 
-        while(level--){
+        while(true){
 
             int left=0;
             if(root->left!=NULL)left=checklevel(root->left);
