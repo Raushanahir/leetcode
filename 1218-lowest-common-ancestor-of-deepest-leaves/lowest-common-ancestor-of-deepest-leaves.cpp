@@ -11,31 +11,45 @@
  */
 class Solution {
 public:
-    TreeNode* find_lca(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root == NULL || root == p || root == q) return root;
-        TreeNode* leftChild = find_lca(root->left, p, q);
-        TreeNode* rightChild = find_lca(root->right, p, q);
-        if(leftChild == NULL) return rightChild;
-        else if(rightChild == NULL) return leftChild;
-        else return root;
-    }
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
-        queue<TreeNode*> q;
-        q.push(root);
-        vector<TreeNode*> last;
-        while(!q.empty()) {
-            int size = q.size();
-            vector<TreeNode*> level;
-            for(int i = 0; i < size; i++) {
-                TreeNode* node = q.front();
-                q.pop();
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
-                level.push_back(node);
-            }
-            last = level;
+        
+        int level=checklevel(root);
+
+        cout << level << endl;
+
+        if(root->left==NULL and root->right==NULL) return root;
+
+        while(level--){
+
+            int left=0;
+            if(root->left!=NULL)left=checklevel(root->left);
+            int right=0;
+            if(root->right!=NULL)right=checklevel(root->right);
+
+            if(left==right) return root;
+            if(left>right) root=root->left;
+            else root=root->right;
         }
-        int size = last.size();
-        return find_lca(root, last[0], last[size - 1]);
+
+        return NULL;
+    }
+
+    int checklevel(TreeNode* root){
+
+        int level=0;
+        queue<TreeNode*>q;
+        q.push(root);
+        while(!q.empty()){
+            int size=q.size();
+            level++;
+            for(int i=0;i<size;i++){
+                TreeNode* temp=q.front();
+                q.pop();
+                if(temp->left!=NULL) q.push(temp->left);
+                if(temp->right!=NULL) q.push(temp->right);
+            }
+        }
+
+        return level;
     }
 };
