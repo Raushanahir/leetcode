@@ -14,7 +14,7 @@ public:
             for(int j = 0; j < i; j++) {
                 int diff = nums[i] - nums[j];
                 int len = 2;
-                if(dp[j].count(diff)) len = dp[j][diff] + 1;
+                if(dp[j].find(diff) != dp[j].end()) len = dp[j][diff] + 1;
                 dp[i][diff] = max(dp[i][diff], len);
                 ans = max(ans, dp[i][diff]);
             }
