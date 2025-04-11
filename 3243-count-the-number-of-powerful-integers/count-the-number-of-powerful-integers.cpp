@@ -1,41 +1,37 @@
 class Solution {
-    public:
-        using ll = long long;
-    
-        ll countValidNumbers(int idx, int tight, string &numStr, string &suffix, int limit, int numLength, vector<vector<ll>>& dp) {
-            if (idx == numLength) return 1;
-            if (dp[idx][tight] != -1) return dp[idx][tight];
-    
-            ll lowerBound = 0 , count = 0;
-            int upperBound = tight ? min(limit, numStr[idx] - '0') : limit;
-    
-            int suffixStartIdx = numLength - suffix.size();
-            if (suffixStartIdx <= idx) {
-                lowerBound = suffix[idx - suffixStartIdx] - '0';
-                upperBound = min(upperBound, suffix[idx - suffixStartIdx] - '0');
+public:
+    long long solve(string& str, string& input, int limit) {
+
+        if (str.length() < input.length()) {
+            return 0;
+        }
+
+        long long count = 0;
+        string tailstr = str.substr(str.length() - input.length());
+        int remainL = str.length() - input.length();
+
+        for (int i = 0; i < remainL; i++) {
+            int digit = str[i] - '0';
+
+            if (digit <= limit) {
+                count += digit * pow(limit + 1, remainL - i - 1);
+            } else {
+                count += pow(limit + 1, remainL - i);
+                return count;
             }
-    
-            for (int i = lowerBound; i <= upperBound; i++) 
-            count += countValidNumbers(idx + 1, tight && (i == numStr[idx] - '0'), numStr, suffix, limit, numLength, dp);
-            
-            return dp[idx][tight] = count;
         }
-    
-        ll numberOfPowerfulInt(ll start, ll finish, int limit, string s) {
-            string upperLimit = to_string(finish);
-            string lowerLimit = to_string(start - 1);
-            int upperLength = upperLimit.size() , lowerLength = lowerLimit.size();
-    
-            ll upperCount = 0, lowerCount = 0;
-            vector<vector<ll>> dp(17, vector<ll>(2, -1));
-    
-            if (s.size() <= upperLength) 
-                upperCount = countValidNumbers(0, 1, upperLimit, s, limit, upperLength, dp);
-    
-            dp.assign(17, vector<ll>(2, -1));
-            if (s.size() <= lowerLength) 
-                lowerCount = countValidNumbers(0, 1, lowerLimit, s, limit, lowerLength, dp);
-    
-            return upperCount - lowerCount;
+        if (tailstr >= input) {
+            return count + 1;
         }
-    };
+        return count;
+    }
+
+    long long numberOfPowerfulInt(long long start, long long finish, int limit,
+                                  string s) {
+
+        string startstr = to_string(start - 1);
+        string finishstr = to_string(finish);
+
+        return solve(finishstr, s, limit) - solve(startstr, s, limit);
+    }
+};
