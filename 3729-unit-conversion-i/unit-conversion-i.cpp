@@ -7,7 +7,7 @@ public:
         unordered_map<int, vector<pair<int, ll>>> adj;
         int n = 0;
         for (auto &conv : conversions) n = max(n, max(conv[0], conv[1]) + 1);
-        vector<ll> res(n,0);
+        vector<int> res(n,0);
         vector<int>vis(n,0);
 
         for (auto &conv : conversions) {
@@ -37,8 +37,6 @@ public:
             }   
         }
 
-        vector<int> ans(n);
-        for (int i = 0; i < n; i++) ans[i] = res[i] % MOD;
-        return ans;
+        return res;
     }
 };
