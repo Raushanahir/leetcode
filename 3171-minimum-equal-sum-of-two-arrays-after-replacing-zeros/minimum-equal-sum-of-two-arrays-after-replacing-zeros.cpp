@@ -24,15 +24,13 @@ public:
             }
         }
 
-        cout << zeros1 << " " << zeros2 << endl ;
-        cout << sum1 << " " << sum2 ;
         if (zeros1 == -1 || zeros2 == -1) {
             if (zeros1 != -1) {
                 sum1 += zeros1;
-                return sum2>=sum1? sum2:-1; 
+                return sum2 >= sum1 ? sum2 : -1;
             } else if (zeros2 != -1) {
                 sum2 += zeros2;
-                return sum1>=sum2?sum1:-1;
+                return sum1 >= sum2 ? sum1 : -1;
             }
             if (sum1 == sum2) {
                 return sum1;
@@ -42,6 +40,7 @@ public:
             sum1 += zeros1;
             sum2 += zeros2;
         }
+
         return max(sum1, sum2);
     }
 };
