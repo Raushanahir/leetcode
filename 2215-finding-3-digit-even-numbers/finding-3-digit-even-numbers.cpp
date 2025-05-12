@@ -11,19 +11,26 @@ public:
                 for(int k=0;k<n;k++){
                     if(i==k || j==k) continue;
                     int dig=100*digits[i]+10*digits[j]+digits[k];
-                    st.insert(dig);
+                    if(dig%2==0 and dig/100!=0){
+                        ans.push_back(dig);
+                    }
                     dig=100*digits[j]+10*digits[i]+digits[k];
-                    st.insert(dig);
+                    if(dig%2==0 and dig/100!=0){
+                        ans.push_back(dig);
+                    }
                 }
             }
         }
 
-        for(auto it:st){
-            if(it%2==0 and it/100!=0){
-                ans.push_back(it);
+        sort(ans.begin(),ans.end());
+        vector<int>res;
+
+        for(auto it:ans){
+            if(res.empty() || res.back()!=it){
+                res.push_back(it);
             }
         }
 
-        return ans;
+        return res;
     }
 };
