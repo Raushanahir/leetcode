@@ -14,7 +14,6 @@ public:
                 cnt++;
                 j++;
             }
-            cout << j << endl;
             chars[i]=chars[j-1];
             i++;
             if(cnt==0){j++; continue;}
