@@ -13,7 +13,6 @@ public:
         b = j;
 
         while (j < n) {
-            cout << a << " " << b << endl;
             if (fruits[j] != fruits[a] and fruits[j] != fruits[b]) {
                 ans = max(ans, j - i);
                 if (a < b) {
